@@ -4,7 +4,7 @@ ShadowVault provides powerful tools to encode and decode sensitive information u
 
 ---
 
-## 🔹 Project Modules
+##  Project Modules
 
 ### 1. Text Encoding & Decoding
 
@@ -25,7 +25,7 @@ ShadowVault provides powerful tools to encode and decode sensitive information u
 
 ---
 
-## 🌐 Technologies Used
+##  Technologies Used
 
 * **Frontend Only**: HTML, CSS, JavaScript
 * **No Backend, No Frameworks**
@@ -33,7 +33,7 @@ ShadowVault provides powerful tools to encode and decode sensitive information u
 
 ---
 
-## 💡 How to Use
+##  How to Use
 
 ### Text Encoding
 
@@ -60,7 +60,7 @@ ShadowVault provides powerful tools to encode and decode sensitive information u
 
 ---
 
-## ⚠️ Disclaimer
+##  Disclaimer
 
 This tool is built for **learning and educational purposes only**. Do not use ShadowVault for illegal or unethical data hiding.
 
