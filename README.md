@@ -1,6 +1,6 @@
 # ShadowVault
 
-**ShadowVault** is a lightweight web-based steganography tool that allows users to **hide and reveal secret data** using **Text** or **Image**-based encoding and decoding — all in the browser using only **HTML, CSS, and JavaScript**.
+ShadowVault provides powerful tools to encode and decode sensitive information using multiple cryptographic algorithms. Keep data safe and secure. — all in the browser using only **HTML, CSS, and JavaScript**.
 
 ---
 
