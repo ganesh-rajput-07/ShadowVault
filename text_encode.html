@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShadowVault - Encode Text</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap">
+  <style>
+    /* Global Styles */
+    :root {
+      --primary: #000000;
+      --secondary: #ffffff;
+      --accent: #00ffe1;
+      --text-dark: #111111;
+      --text-light: #f8f8f8;
+      --gray-dark: #222222;
+      --gray-light: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--primary);
+      color: var(--secondary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .mono {
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      flex: 1;
+      position: relative;
+    }
+
+    /* Logo & Header */
+    .logo-container {
+      text-align: center;
+      padding: 20px 0;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 80px;
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      text-decoration: none;
+      position: relative;
+      margin: 0;
+    }
+
+    .logo-text::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    /* Hamburger Menu */
+    .hamburger-menu {
+      position: absolute;
+      top: 30px;
+      right: 20px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      display: none;
+      z-index: 100;
+      color: var(--secondary);
+    }
+
+    .hamburger-close {
+      display: none;
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 101;
+      color: var(--accent);
+    }
+
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: 98;
+      display: none;
+    }
+
+    .menu-overlay.active {
+      display: block;
+    }
+
+    /* Page Title */
+    .page-title {
+      text-align: center;
+      margin: 20px 0 40px;
+      font-size: 2rem;
+      position: relative;
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background-color: var(--accent);
+    }
+
+    /* Navigation */
+    .navbar {
+      display: flex;
+      justify-content: center;
+      background-color: var(--gray-dark);
+      padding: 15px 0;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .navbar a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      padding: 10px 20px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      margin: 0 5px;
+    }
+
+    .navbar a:hover {
+      background-color: var(--accent);
+      color: var(--text-dark);
+    }
+
+    /* Encoder Box */
+    .encoder-box {
+      background-color: var(--gray-dark);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--gray-light);
+      border-radius: 4px;
+      background-color: var(--primary);
+      color: var(--secondary);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      transition: border 0.3s ease;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 15px;
+      border: 1px solid var(--gray-light);
+      border-radius: 4px;
+      background-color: var(--primary);
+      color: var(--secondary);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.9rem;
+      resize: vertical;
+      transition: border 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      margin: 25px 0 15px;
+      color: var(--accent);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 12px 25px;
+      background-color: var(--accent);
+      color: var(--text-dark);
+      border: none;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      flex: 1;
+      min-height: 44px;
+    }
+
+    button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--gray-dark);
+      padding: 20px 0;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .footer p {
+      color: var(--gray-light);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .logo-container {
+        height: 60px;
+        padding: 10px 0;
+        justify-content: flex-start;
+        padding-left: 20px;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+      }
+
+      .logo-text::after {
+        width: 80px;
+        bottom: -8px;
+      }
+
+      .page-title {
+        font-size: 1.5rem;
+        margin: 15px 0 30px;
+      }
+
+      .hamburger-menu {
+        display: block;
+      }
+
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--gray-dark);
+        z-index: 99;
+        transition: left 0.3s ease;
+        padding: 20px;
+        margin-bottom: 0;
+      }
+
+      .navbar.active {
+        left: 0;
+      }
+
+     
+      .menu-overlay.active {
+        display: block;
+      }
+
+      .navbar a {
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+        padding: 15px;
+        font-size: 1rem;
+      }
+
+      .encoder-box {
+        padding: 20px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      input, select, textarea, button {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 1.3rem;
+      }
+
+      .page-title {
+        font-size: 1.3rem;
+      }
+
+      .encoder-box {
+        padding: 15px;
+      }
+
+      textarea {
+        min-height: 120px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo and Hamburger -->
+    <div class="logo-container">
+      <a href="index.html" class="logo-text">SHADOWVAULT</a>
+      <div class="hamburger-menu" onclick="toggleNavbar()">
+        &#9776;
+      </div>
+    </div>
+    <div class="hamburger-close" onclick="toggleNavbar()">
+      &times;
+    </div>
+    <div class="menu-overlay" onclick="toggleNavbar()"></div>
+
+    <!-- Page Title -->
+    <h1 class="page-title">Encode Text</h1>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+      <a href="index.html">Home</a>
+      <a href="text_encode.html">Text → Encode</a>
+      <a href="text_decode.html">Text → Decode</a>
+      <a href="image_encode.html">Image → Encode</a>
+      <a href="image_decode.html">Image → Decode</a>
+    </nav>
+
+    <!-- Encoder Box -->
+    <div class="encoder-box">
+      <div class="form-group">
+        <label for="algorithm-select">Algorithm:</label>
+        <select id="algorithm-select">
+          <option value="base64">Base64 Encoding</option>
+          <option value="rot13">ROT13 Encoding</option>
+          <option value="caesar">Caesar Cipher</option>
+        </select>
+      </div>
+
+      <h3 class="section-title">Original Text</h3>
+      <textarea id="inputText" placeholder="Enter your text to encode here..."></textarea>
+
+      <div class="button-group">
+        <button onclick="encode()">ENCODE</button>
+      </div>
+
+      <h3 class="section-title">Encoded Output</h3>
+      <textarea id="outputText" readonly placeholder="Your encoded text will appear here..."></textarea>
+
+      <div class="button-group">
+        <button id="copyButton" onclick="copyToClipboard()">COPY TO CLIPBOARD</button>
+        <button id="downloadButton" onclick="downloadEncodedText()">DOWNLOAD</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 ShadowVault. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Toggle mobile navbar
+    function toggleNavbar() {
+      const navbar = document.getElementById('navbar');
+      const closeBtn = document.querySelector('.hamburger-close');
+      const overlay = document.querySelector('.menu-overlay');
+      
+      navbar.classList.toggle('active');
+      closeBtn.classList.toggle('active');
+      overlay.classList.toggle('active');
+      
+      document.body.style.overflow = navbar.classList.contains('active') ? 'hidden' : '';
+    }
+
+    // Encoding function
+    function encode() {
+      const algorithm = document.getElementById('algorithm-select').value;
+      const inputText = document.getElementById('inputText').value;
+      let outputText = '';
+
+      // Implement encoding logic
+      switch(algorithm) {
+        case 'base64':
+          outputText = btoa(inputText);
+          break;
+        case 'rot13':
+          outputText = inputText.replace(/[a-zA-Z]/g, function(c) {
+            return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+          });
+          break;
+        case 'caesar':
+          // Implement Caesar cipher encoding (shift of 3)
+          outputText = inputText.replace(/[a-zA-Z]/g, function(c) {
+            const base = c <= 'Z' ? 65 : 97;
+            return String.fromCharCode((c.charCodeAt(0) - base + 3) % 26 + base);
+          });
+          break;
+        default:
+          outputText = 'Please select a valid algorithm';
+      }
+
+      document.getElementById('outputText').value = outputText;
+    }
+
+    function copyToClipboard() {
+      const outputText = document.getElementById('outputText');
+      outputText.select();
+      document.execCommand('copy');
+
+      // Visual feedback
+      const button = document.getElementById('copyButton');
+      const originalText = button.textContent;
+      button.textContent = 'COPIED!';
+      button.style.backgroundColor = '#4CAF50';
+
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.style.backgroundColor = '';
+      }, 2000);
+    }
+
+    function downloadEncodedText() {
+      const outputText = document.getElementById('outputText').value;
+      if (!outputText) {
+        alert('No encoded text to download');
+        return;
+      }
+
+      const blob = new Blob([outputText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'encoded_text.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

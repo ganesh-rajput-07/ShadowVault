@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShadowVault - Secure Encoding/Decoding</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap">
+  <style>
+    /* Global Styles */
+    :root {
+      --primary: #000000;
+      --secondary: #ffffff;
+      --accent: #00ffe1;
+      --text-dark: #111111;
+      --text-light: #f8f8f8;
+      --gray-dark: #222222;
+      --gray-light: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--primary);
+      color: var(--secondary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .mono {
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Logo & Header */
+    .logo-container {
+      text-align: center;
+      padding: 20px 0;
+      position: relative;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--secondary);
+      text-decoration: none;
+      letter-spacing: 3px;
+      display: inline-block;
+      position: relative;
+    }
+
+    .logo-text::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    /* Navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--gray-dark);
+      position: relative;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      padding: 10px 15px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background-color: var(--gray-dark);
+      color: var(--accent);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      color: var(--gray-light);
+    }
+
+    /* How to Use Section */
+    .how-to-use {
+      padding: 50px 0;
+      background-color: var(--gray-dark);
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 1.8rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: var(--accent);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .step-card {
+      background-color: var(--primary);
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .step-number {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-color: var(--accent);
+      color: var(--text-dark);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .step-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--accent);
+    }
+
+    .step-card p {
+      color: var(--gray-light);
+      font-size: 0.95rem;
+    }
+
+    /* Social Links */
+    .social-links {
+      padding: 60px 0;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .social-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+
+    .social-card {
+      width: 100px;
+      height: 100px;
+      background-color: var(--gray-dark);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-card:hover {
+      transform: scale(1.1);
+      filter: invert(1);
+    }
+
+    .social-card-1:hover {
+      background-color: var(--accent);
+    }
+
+    .social-card-2:hover {
+      background-color: blue;
+    }
+
+    .social-card-3:hover {
+      background-color: black;
+    }
+
+    .social-icon {
+      width: 25px;
+      height: 25px;
+      margin-bottom: 8px;
+      filter: invert(0.8);
+    }
+
+    .social-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-light);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--gray-dark);
+      padding: 25px 0;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .footer p {
+      color: var(--gray-light);
+    }
+
+    /* Mobile Menu */
+    .hamburger-menu {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 100;
+      color: var(--secondary);
+    }
+
+    .hamburger-close {
+      display: none;
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      font-size: 2rem;
+      cursor: pointer;
+      z-index: 101;
+      color: var(--secondary);
+    }
+
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 98;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background-color: var(--gray-dark);
+        z-index: 99;
+        transition: left 0.3s ease;
+        padding: 30px 20px;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border-bottom: none;
+      }
+
+      .navbar.active {
+        left: 0;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 30px;
+        gap: 15px;
+      }
+
+      .nav-links a {
+        padding: 12px 15px;
+        font-size: 1rem;
+        width: 100%;
+        text-align: left;
+      }
+
+      .hamburger-menu {
+        display: block;
+        position: fixed;
+        right: 20px;
+        top: 25px;
+      }
+
+      .hamburger-close.active {
+        display: block;
+      }
+
+      .menu-overlay.active {
+        display: block;
+      }
+
+      .logo-text {
+        font-size: 1.5rem;
+        margin-bottom: 0;
+      }
+
+      .logo-text::after {
+        width: 100px;
+      }
+
+      .hero {
+        padding: 40px 0;
+        margin-top: 20px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+        padding: 0 15px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 40px;
+      }
+
+      .steps-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .social-card {
+        width: 80px;
+        height: 80px;
+      }
+
+      .social-icon {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .logo-text {
+        font-size: 1.3rem;
+      }
+
+      .social-grid {
+        gap: 15px;
+      }
+
+      .social-card {
+        width: 70px;
+        height: 70px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <div class="container">
+    <nav class="navbar" id="navbar">
+      <a href="index.html" class="logo-text">SHADOWVAULT</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="text_encode.html">Text → Encode</a>
+        <a href="text_decode.html">Text → Decode</a>
+        <a href="image_encode.html">Image → Encode</a>
+        <a href="image_decode.html">Image → Decode</a>
+      </div>
+    </nav>
+    <div class="hamburger-menu" onclick="toggleNavbar()">&#9776;</div>
+    <div class="hamburger-close" onclick="toggleNavbar()">×</div>
+    <div class="menu-overlay" onclick="toggleNavbar()"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Secure Data Encoding & Decoding</h1>
+      <p>ShadowVault provides powerful tools to encode and decode your sensitive information using multiple cryptographic algorithms. Keep your data safe and secure.</p>
+    </div>
+  </section>
+
+  <!-- How to Use Section -->
+  <section class="how-to-use">
+    <div class="container">
+      <h2 class="section-title">How It Works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Select Algorithm</h3>
+          <p>Choose from Base64, ROT13, or Caesar Cipher to encode or decode your text with industry-standard cryptography.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Input Your Data</h3>
+          <p>Enter the text you want to process or upload an image file for steganographic encoding/decoding operations.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Get Results</h3>
+          <p>Instantly receive your encoded/decoded output with options to copy to clipboard or download the results.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Links -->
+  <section class="social-links">
+    <div class="container">
+      <h2 class="section-title">Connect With Me</h2>
+      <div class="social-grid">
+        <a href="https://www.youtube.com/@ManyuNiX" target="_blank" class="social-card social-card-1">
+          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" class="social-icon">
+          <span class="social-name">YouTube</span>
+        </a>
+        <a href="https://www.linkedin.com/in/ganeshrajput7045/" target="_blank" class="social-card social-card-2">
+          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384072.png" alt="LinkedIn" class="social-icon">
+          <span class="social-name">LinkedIn</span>
+        </a>
+        <a href="https://github.com/ganesh-rajput-07" target="_blank" class="social-card social-card-3">
+          <img src="https://cdn-icons-png.flaticon.com/512/1051/1051326.png" alt="GitHub" class="social-icon">
+          <span class="social-name">GitHub</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 ShadowVault. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleNavbar() {
+      const navbar = document.getElementById('navbar');
+      const closeBtn = document.querySelector('.hamburger-close');
+      const overlay = document.querySelector('.menu-overlay');
+      
+      navbar.classList.toggle('active');
+      closeBtn.classList.toggle('active');
+      overlay.classList.toggle('active');
+      
+      document.body.style.overflow = navbar.classList.contains('active') ? 'hidden' : '';
+    }
+  </script>
+</body>
+</html>
