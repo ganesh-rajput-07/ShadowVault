@@ -1,5 +1,3 @@
-Great, thanks for the clarity. Based on your updated explanation, here's a **clean and concise README** for your **ShadowVault** project, tailored to how it actually works:
-
 ---
 
 # ShadowVault
@@ -69,5 +67,3 @@ Great, thanks for the clarity. Based on your updated explanation, here's a **cle
 This tool is built for **learning and educational purposes only**. Do not use ShadowVault for illegal or unethical data hiding.
 
 ---
-
-Let me know if you want to add live demo links or a simple UI preview section.
