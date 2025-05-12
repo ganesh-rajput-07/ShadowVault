@@ -1,67 +1,50 @@
 # ShadowVault
 
-ShadowVault provides powerful tools to encode and decode sensitive information using multiple cryptographic algorithms. Keep data safe and secure. — all in the browser using only **HTML, CSS, and JavaScript**.
+ShadowVault is a fully client-side tool for encoding and decoding both **text** and **images** using **HTML, CSS, and JavaScript only**. No backend, no frameworks, and no data ever leaves your browser.
 
----
+## 🔗 Live Project
 
-##  Project Modules
+Check out the live version here:  
+[https://shadowvault.html-5.me/](https://shadowvault.html-5.me/)
 
-### 1. Text Encoding & Decoding
+## 📁 GitHub Repository
 
-* **Input**: User provides a message to encode.
-* **Encoding Algorithms**: Choose from 3 different custom encoding algorithms.
-* **Output**: Encoded text that hides the secret message.
-* **Decoding**: User pastes the encoded text and selects the algorithm used to decode and retrieve the original message.
+Star, fork, or contribute here:  
+[https://github.com/ganesh-rajput-07/ShadowVault](https://github.com/ganesh-rajput-07/ShadowVault)
 
-### 2. Image Encoding & Decoding (Base64)
+## 🚀 Features
 
-* **Encoding**:
+- **Text Encoding & Decoding**
+  - Supports three different encoding algorithms
+  - Clean interface for quick testing and secure conversion
 
-  * User uploads an image.
-  * The image is converted to **Base64 format**, which can be stored, transmitted, or embedded.
-* **Decoding**:
+- **Image Encoding & Decoding**
+  - Convert images to Base64 directly in the browser
+  - Reconstruct original images from Base64 strings
 
-  * The Base64 string is decoded back into its original image format and displayed/downloaded.
+- **100% Client-Side**
+  - No server interaction
+  - All operations are performed locally
 
----
+- **Built with Vanilla Technologies**
+  - HTML5, CSS3, and JavaScript
+  - No external libraries or frameworks
 
-##  Technologies Used
+## 📦 Use Cases
 
-* **Frontend Only**: HTML, CSS, JavaScript
-* **No Backend, No Frameworks**
-* **Runs fully in-browser**
+- Quick text encoding/decoding
+- Safe Base64 conversion for images
+- Educational tool for understanding encoding mechanisms
+- Lightweight alternative to complex encoding utilities
 
----
+## 🧠 Developer Friendly
 
-##  How to Use
+ShadowVault is designed to be simple, readable, and easy to modify. Developers can fork the repo and customize it as needed for their own projects or experiments.
 
-### Text Encoding
+## 👨‍💻 Author
 
-1. Enter your secret message.
-2. Select one of the available encoding algorithms.
-3. Click **Encode** to get the disguised message.
+Developed by [Ganesh Rajput](https://github.com/ganesh-rajput-07)
 
-### Text Decoding
+## 📄 License
 
-1. Paste the encoded message.(or also choose the .txt file)
-2. Select the correct algorithm used for encoding.
-3. Click **Decode** to retrieve the original message.
-
-### Image Encoding
-
-1. Upload an image (JPG/PNG).
-2. The tool converts it into a Base64 string.
-3. Copy or download the Base64 output.
-
-### Image Decoding
-
-1. Paste a valid Base64 string of an image.(or also choose the .txt file)
-2. The tool renders the image and allows you to download it.
-
----
-
-##  Disclaimer
-
-This tool is built for **learning and educational purposes only**. Do not use ShadowVault for illegal or unethical data hiding.
-
----
+This project is licensed under the MIT License. Feel free to use it in your own projects.
